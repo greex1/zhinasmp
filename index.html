@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0a0d11">
-<title>踹那伺服器</title>
+<title>server</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -181,25 +181,68 @@
     .nav-item.active { color: #ffffff; }
     body.light-mode .nav-item.active { color: #06120e; }
 
-    /* 其它组件 */
+    /* ========== 设置页面 ========== */
     .settings-page { position: absolute; inset: 0; background: transparent; z-index: 800; display: flex; flex-direction: column; overflow-y: auto; padding: calc(24px + env(safe-area-inset-top)) var(--pad) 20px; transform: translateY(100%); transition: transform 0.4s; visibility: hidden; }
     .settings-page.active { transform: translateY(0); visibility: visible; }
     .settings-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
     .settings-header .form-title { margin: 0; }
     .settings-body { display: flex; flex-direction: column; gap: 12px; }
     .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-radius: 16px; font-weight: 700; }
-    .terms-btn { color: #3b82f6; text-decoration: underline; }
+    .terms-btn { color: #3b82f6; text-decoration: underline; cursor: pointer; flex: 1; }
     .jelly-toggle { position: relative; width: 54px; height: 32px; background: var(--switch-bg); border-radius: 16px; cursor: pointer; }
     .jelly-thumb { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; background: #ffffff; border-radius: 14px; transition: transform 0.35s; }
     .jelly-toggle.active .jelly-thumb { transform: translateX(22px); }
+
+    /* ========== 彩蛋隐形按钮 ========== */
+    .secret-egg-btn {
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        /* 默认不可见 */
+        opacity: 0;
+        pointer-events: none; 
+        transition: opacity 0.3s ease, transform 0.1s;
+        padding: 5px;
+    }
+    /* 核心逻辑：只有在深色模式下才显示且可点击 */
+    body:not(.light-mode) .secret-egg-btn {
+        opacity: 0.2; /* 隐约可见 */
+        pointer-events: auto;
+    }
+    body:not(.light-mode) .secret-egg-btn:active {
+        opacity: 1;
+        transform: scale(0.8);
+    }
+
+    /* ========== 提示与弹窗 ========== */
     .toast { position: absolute; left: 50%; bottom: 120px; padding: 12px 20px; border-radius: 12px; background: rgba(18, 24, 30, 0.95); font-size: 13px; transform: translate(-50%, 10px); opacity: 0; transition: 0.3s; pointer-events: none; z-index: 600; border: 1px solid var(--glass-border); color: #fff; width: max-content; max-width: 90%; text-align: center; line-height: 1.4; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    
     .overlay { position: absolute; inset: 0; z-index: 900; display: none; align-items: flex-end; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
     .sheet { width: 100%; max-height: 80%; background: rgba(18, 24, 30, 0.95); border-radius: 20px 20px 0 0; transform: translateY(100%); transition: transform 0.3s; display: flex; flex-direction: column; }
     .sheet.active { transform: translateY(0); }
     .sheet-head { display: flex; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--glass-border); color: #fff;}
     .sheet-close { background: none; border: none; color: #fff; font-size: 24px; }
     .sheet-body { padding: 20px; overflow-y: auto; color: #fff; font-size: 14px; line-height: 1.8; white-space: pre-wrap;}
+
+    /* 专属彩蛋弹窗 */
+    .egg-modal {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+        z-index: 1000; background: var(--glass-bg); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
+        border: 1px solid var(--glass-border); border-radius: 24px; padding: 40px 30px; text-align: center;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.3);
+        opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        width: 80%; max-width: 320px;
+    }
+    .egg-modal.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+    .egg-title { font-size: 26px; font-weight: 900; color: #ffd166; text-shadow: 0 0 20px rgba(255, 209, 102, 0.5); margin-bottom: 12px; letter-spacing: 2px; }
+    .egg-desc { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+    .egg-modal-mask {
+        position: absolute; inset: 0; z-index: 999; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+        display: none; opacity: 0; transition: opacity 0.4s;
+    }
+    .egg-modal-mask.show { display: block; opacity: 1; }
 
     @media (min-width: 768px) {
         .page { padding-left: max(24px, calc(50vw - 400px)); padding-right: max(24px, calc(50vw - 400px)); padding-top: 40px; }
@@ -230,7 +273,6 @@
                     </div>
                 </div>
                 
-                <!-- 服务器文件 -->
                 <div class="card glass">
                     <div class="card-head"><span>服务器文件</span><span class="path">Chinasmp/2.txt</span></div>
                     <div class="file-row">
@@ -240,7 +282,6 @@
                     </div>
                 </div>
                 
-                <!-- 群公告（已加回） -->
                 <div class="card glass" id="notice-card" hidden>
                     <div class="card-head"><span>群公告</span><span class="path">Chinasmp/4.txt</span></div>
                     <div class="file-row">
@@ -290,11 +331,6 @@
                         <span class="spinner"></span>
                         <svg class="checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </button>
-
-                    <div style="font-size: 12px; color: var(--text-dim); text-align: center; margin-top: 16px; line-height: 1.6;">
-                        点击后，系统会将内容打包复制到您的剪贴板。<br>
-                        跳转到 QQ 邮箱后，在写邮件页面 <strong>直接粘贴</strong> 即可。
-                    </div>
                 </div>
             </section>
 
@@ -315,6 +351,7 @@
         </div>
     </nav>
 
+    <!-- 设置页面 -->
     <div class="settings-page" id="settings-page">
         <div class="settings-header">
             <button class="back-btn" id="close-settings" style="background:none;border:none;color:var(--text);font-size:24px;">&larr;</button>
@@ -325,13 +362,25 @@
                 <span>浅色模式</span>
                 <div class="jelly-toggle active" id="theme-toggle"><div class="jelly-thumb"></div></div>
             </div>
-            <div class="settings-item glass" style="cursor: pointer;" data-path="/Chinasmp/a01.txt">
-                <span class="terms-btn">服务条款</span>
+            
+            <!-- 服务条款与彩蛋按钮 -->
+            <div class="settings-item glass">
+                <span class="terms-btn" data-path="/Chinasmp/a01.txt">服务条款</span>
+                <button id="secret-egg-btn" class="secret-egg-btn" title="你发现我了">🥚</button>
             </div>
         </div>
     </div>
     
+    <!-- 彩蛋弹窗专属遮罩和弹窗 -->
+    <div class="egg-modal-mask" id="egg-modal-mask"></div>
+    <div class="egg-modal" id="egg-modal">
+        <div class="egg-title">你发现了！！！！</div>
+        <div class="egg-desc">这是一枚隐藏在深色模式下的彩蛋。<br>感谢你如此仔细地探索这个页面。<br>快去告诉服主你找到了吧！</div>
+    </div>
+
     <div class="toast" id="toast"></div>
+    
+    <!-- 文件预览弹窗 -->
     <div class="overlay" id="overlay">
         <div class="sheet" id="sheet">
             <div class="sheet-head"><h3 id="sheet-title">预览</h3><button class="sheet-close" id="sheet-close">&times;</button></div>
@@ -344,9 +393,8 @@
     const currentYear = new Date().getFullYear();
     document.getElementById('year').textContent = currentYear;
 
-    /* ================== 表单提交（复制并跳转网页）逻辑 ================== */
+    /* ================== 表单提交逻辑 ================== */
     const TARGET_EMAIL = "1034137423@qq.com"; 
-    
     const nickInput = document.getElementById('input-nick');
     const contentInput = document.getElementById('input-content');
     const submitBtn = document.getElementById('btn-submit');
@@ -377,25 +425,17 @@
 
         const nick = nickInput.value.trim();
         const content = contentInput.value.trim();
-        
         const copyText = `【收件人】 ${TARGET_EMAIL}\n\n【昵称】 ${nick}\n\n【内容】\n${content}`;
 
         if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(copyText).then(() => {
-                handleJump();
-            }).catch(() => {
-                fallbackCopy(copyText);
-                handleJump();
-            });
+            navigator.clipboard.writeText(copyText).then(handleJump).catch(() => { fallbackCopy(copyText); handleJump(); });
         } else {
-            fallbackCopy(copyText);
-            handleJump();
+            fallbackCopy(copyText); handleJump();
         }
 
         function handleJump() {
             submitBtn.classList.add('loading');
             submitBtn.querySelector('.btn-text').textContent = "正在跳转...";
-
             toast.innerHTML = "内容已复制！<br>即将跳转 QQ 邮箱网页版...";
             toast.classList.add('show');
 
@@ -403,7 +443,6 @@
                 window.open("https://mail.qq.com/", "_blank");
                 submitBtn.classList.remove('loading');
                 submitBtn.classList.add('success');
-                
                 setTimeout(() => {
                     submitBtn.classList.remove('success');
                     submitBtn.querySelector('.btn-text').textContent = "复制内容并前往邮箱";
@@ -423,6 +462,24 @@
         try { document.execCommand('copy'); } catch (err) { console.error(err); }
         document.body.removeChild(textArea);
     }
+
+
+    /* ================== 彩蛋点击逻辑 ================== */
+    const eggBtn = document.getElementById('secret-egg-btn');
+    const eggModal = document.getElementById('egg-modal');
+    const eggMask = document.getElementById('egg-modal-mask');
+
+    eggBtn.addEventListener('click', () => {
+        eggMask.classList.add('show');
+        // 稍微延迟一点让动画更自然
+        setTimeout(() => eggModal.classList.add('show'), 50);
+    });
+
+    // 点击遮罩关闭彩蛋弹窗
+    eggMask.addEventListener('click', () => {
+        eggModal.classList.remove('show');
+        setTimeout(() => eggMask.classList.remove('show'), 300);
+    });
 
 
     /* ================== 服务器状态获取 ================== */
@@ -597,7 +654,7 @@
     document.getElementById('sheet-close').addEventListener('click', () => { sheet.classList.remove('active'); setTimeout(() => overlay.style.display = 'none', 300); });
     overlay.addEventListener('click', e => { if (e.target === overlay) { sheet.classList.remove('active'); setTimeout(() => overlay.style.display = 'none', 300); } });
 
-    // ================== 检查群公告是否存在 ==================
+    // 检查群公告
     fetch('Chinasmp/4.txt').then(res => {
         if (res.ok) document.getElementById('notice-card').hidden = false;
     }).catch(() => {});
