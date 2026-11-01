@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0a0d11">
-<title>踹那斯普</title>
-<!-- 引入思源黑体 (Noto Sans SC) -->
+<title>液态玻璃服务器主页</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -16,25 +15,18 @@
         --primary: #3b82f6;
         --primary-glow: rgba(59, 130, 246, 0.4);
         --error: #ff5c5c;
-        
         --text: #e9eef2;
         --text-dim: #8b98a5;
-        
         --glass-bg: rgba(255, 255, 255, 0.06);
         --glass-border: rgba(255, 255, 255, 0.15);
         --glass-highlight: inset 0 1px 2px rgba(255, 255, 255, 0.3);
         --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        
         --nav-inner-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
         --nav-border: rgba(255, 255, 255, 0.15);
         --nav-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.3);
-        
         --file-row-bg: rgba(0, 0, 0, 0.25);
         --switch-bg: rgba(150, 150, 150, 0.3); 
-        
         --pad: 18px;
-        
-        /* 状态圆点颜色 */
         --online: #4ecca3;
         --offline: #ff5c5c;
     }
@@ -43,16 +35,13 @@
     body.light-mode {
         --text: #0a0d11;
         --text-dim: #3a4652;
-        
         --glass-bg: rgba(255, 255, 255, 0.65);
         --glass-border: rgba(0, 0, 0, 0.08);
         --glass-highlight: inset 0 1px 2px rgba(255, 255, 255, 0.9);
         --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-        
         --nav-inner-bg: rgba(255, 255, 255, 0.4);
         --nav-border: rgba(0, 0, 0, 0.08);
         --nav-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), inset 0 1px 3px rgba(255, 255, 255, 1), inset 0 -1px 2px rgba(0, 0, 0, 0.02);
-        
         --file-row-bg: rgba(0, 0, 0, 0.04);
         --switch-bg: rgba(59, 130, 246, 0.2); 
     }
@@ -75,15 +64,13 @@
     img { -webkit-user-drag: none; }
     [hidden] { display: none !important; }
 
-    /* ========== 核心：深色壁纸底层 ========== */
+    /* ========== 背景层 ========== */
     .bg-dark-layer {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
         background-image: url('/Chinasmp/b10.png'); 
         background-size: cover; background-position: center; background-repeat: no-repeat;
         z-index: 0; pointer-events: none;
     }
-
-    /* ========== 核心：浅色壁纸扩散底层 ========== */
     .bg-light-layer {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
         background-image: url('/Chinasmp/b11.png'); 
@@ -93,16 +80,7 @@
         will-change: clip-path; transform: translateZ(0); backface-visibility: hidden;
     }
 
-    /* ========== 动画性能优化核心 ========== */
-    body.theme-animating .glass,
-    body.theme-animating .footer,
-    body.theme-animating .nav-inner,
-    body.theme-animating .settings-item {
-        backdrop-filter: blur(8px) saturate(150%) !important;
-        -webkit-backdrop-filter: blur(8px) saturate(150%) !important;
-    }
-
-    /* ========== 页面主体布局 ========== */
+    /* ========== 布局 ========== */
     .app { 
         position: relative; z-index: 10; 
         width: 100%; max-width: 100%; height: 100vh; height: 100dvh; 
@@ -126,7 +104,7 @@
     }
     .page::-webkit-scrollbar { display: none; }
 
-    /* ========== 液态玻璃通用类 ========== */
+    /* ========== 液态玻璃 ========== */
     .glass {
         background: var(--glass-bg);
         backdrop-filter: blur(24px) saturate(200%) brightness(1.1) contrast(1.1);
@@ -135,263 +113,104 @@
         box-shadow: var(--glass-highlight), var(--glass-shadow);
         position: relative; overflow: hidden;
     }
-    .glass::before {
-        content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-        background: linear-gradient(115deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 80%, rgba(255,255,255,0.02) 100%);
-    }
 
-    /* ========== 卡片与主页 ========== */
+    /* ========== 主页 ========== */
     .card { border-radius: 16px; padding: 16px; margin-bottom: 14px; width: 100%; }
     .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--text-dim); }
     .path { padding: 2px 6px; border-radius: 6px; background: var(--file-row-bg); font-family: monospace; font-size: 11px; }
-    
-    /* 头像白色边框 */
-    .avatar { 
-        display: block; width: 90px; height: 90px; margin: 10px auto 20px; border-radius: 50%; 
-        object-fit: cover; background: #222; 
-        border: 2px solid #ffffff; 
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); 
-        transition: border-color 0.4s ease, box-shadow 0.4s ease;
-    }
-    
+    .avatar { display: block; width: 90px; height: 90px; margin: 10px auto 20px; border-radius: 50%; object-fit: cover; background: #222; border: 2px solid #ffffff; box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
     .intro { text-align: center; font-size: 14px; line-height: 1.8; color: var(--text-dim); }
     .intro b { color: #4ecca3; }
     
-    /* 服务器状态展示 */
-    .server-status {
-        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-        margin-top: 14px; padding: 6px 16px; border-radius: 20px;
-        background: var(--file-row-bg);
-        font-size: 13px; font-weight: 700; color: var(--text);
-        transition: all 0.3s ease;
-    }
-    .status-dot {
-        width: 8px; height: 8px; border-radius: 50%; background: #8b98a5;
-    }
-    .status-dot.online {
-        background: var(--online);
-        box-shadow: 0 0 8px var(--online);
-        animation: pulse 2s infinite;
-    }
-    .status-dot.offline {
-        background: var(--offline);
-        box-shadow: 0 0 8px var(--offline);
-    }
-    @keyframes pulse {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 204, 163, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(78, 204, 163, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 204, 163, 0); }
-    }
+    .server-status { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; padding: 6px 16px; border-radius: 20px; background: var(--file-row-bg); font-size: 13px; font-weight: 700; color: var(--text); }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #8b98a5; }
+    .status-dot.online { background: var(--online); box-shadow: 0 0 8px var(--online); animation: pulse 2s infinite; }
+    .status-dot.offline { background: var(--offline); box-shadow: 0 0 8px var(--offline); }
+    @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 204, 163, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(78, 204, 163, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 204, 163, 0); } }
 
     .file-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: var(--file-row-bg); }
     .file-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(255, 209, 102, 0.1); color: #ffd166; }
     .file-icon.is-green { background: rgba(78, 204, 163, 0.1); color: #4ecca3; }
     .file-icon svg { width: 18px; height: 18px; fill: currentColor; }
     .file-name { flex: 1; font-size: 14px; }
-    
-    /* 浏览按钮 */
-    .btn-ghost { 
-        padding: 6px 16px; border-radius: 10px; font-size: 13px; cursor: pointer; color: var(--text); 
-        background: var(--glass-bg); backdrop-filter: blur(10px); 
-        border: 1px solid var(--glass-border); box-shadow: var(--glass-highlight), 0 2px 8px rgba(0,0,0,0.1); 
-        transition: transform 0.1s, background 0.2s;
-    }
-    body.light-mode .btn-ghost {
-        background: rgba(255, 255, 255, 0.7);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255,255,255,1);
-        border-color: rgba(0,0,0,0.06);
-    }
-    .btn-ghost:active { transform: scale(0.95); }
+    .btn-ghost { padding: 6px 16px; border-radius: 10px; font-size: 13px; cursor: pointer; color: var(--text); background: var(--glass-bg); border: 1px solid var(--glass-border); }
+    body.light-mode .btn-ghost { background: rgba(255, 255, 255, 0.7); }
 
-    /* ========== 3D 倾斜图片画廊 (Grid 布局) ========== */
-    .gallery { 
-        display: grid; 
-        grid-template-columns: 1fr; /* 默认单列，适配手机 */
-        gap: 16px; 
-        margin-bottom: 14px; 
-        perspective: 1000px; 
-    }
-    .gallery-item { 
-        aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; 
-        background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-highlight), var(--glass-shadow);
-        touch-action: pan-y; -webkit-user-select: none; user-select: none;
-        transform-style: preserve-3d; will-change: transform, box-shadow;
-        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
-    }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; display: block; }
+    .gallery { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 14px; perspective: 1000px; }
+    .gallery-item { aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: var(--glass-bg); border: 1px solid var(--glass-border); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
     
-    .footer { 
-        margin-top: auto; padding: 16px 20px; text-align: center; font-size: 12px; line-height: 1.8; color: var(--text-dim); cursor: pointer; -webkit-user-select: none; user-select: none;
-        background: var(--glass-bg); backdrop-filter: blur(16px) saturate(200%) brightness(1.1) contrast(1.1); -webkit-backdrop-filter: blur(16px) saturate(200%) brightness(1.1) contrast(1.1);
-        border: 1px solid var(--glass-border); border-radius: 16px; box-shadow: var(--glass-highlight), var(--glass-shadow);
-    }
+    .footer { margin-top: auto; padding: 16px 20px; text-align: center; font-size: 12px; line-height: 1.8; color: var(--text-dim); cursor: pointer; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; }
 
-    /* ========== 表单 ========== */
+    /* ========== 投稿箱表单 ========== */
     .form-wrap { width: 100%; padding-top: 10px; display: flex; flex-direction: column; }
     .form-title { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--text); }
-    .form-title small { display: block; margin-top: 6px; font-size: 12px; font-weight: 400; color: var(--text-dim); }
+    .form-title small { display: block; margin-top: 6px; font-size: 12px; font-weight: normal; color: var(--text-dim); }
+    
     .field { border-radius: 16px; padding: 14px 16px; margin-bottom: 16px; }
-    .field:focus-within { border-color: rgba(59, 130, 246, 0.6); box-shadow: var(--glass-highlight), 0 0 15px rgba(59, 130, 246, 0.15); }
+    .field:focus-within { border-color: rgba(59, 130, 246, 0.6); }
     .field.error { border-color: var(--error); }
-    .field label { display: block; margin-bottom: 6px; font-size: 12px; color: var(--text-dim); position: relative; z-index: 1; }
+    .field label { display: block; margin-bottom: 6px; font-size: 12px; color: var(--text-dim); }
     .field.error label { color: var(--error); }
-    .field input, .field textarea { width: 100%; border: none; background: transparent; color: var(--text); font-size: 15px; line-height: 1.5; resize: none; position: relative; z-index: 1; }
-    .field input::placeholder, .field textarea::placeholder { color: var(--text-dim); opacity: 0.5; }
-    
-    .error-msg { display: none; margin-top: 8px; font-size: 12px; color: var(--error); position: relative; z-index: 1; }
+    .field input, .field textarea { width: 100%; border: none; background: transparent; color: var(--text); font-size: 15px; resize: none; }
+    .error-msg { display: none; margin-top: 8px; font-size: 12px; color: var(--error); }
     .error-msg.show { display: block; }
-    .char-count { text-align: right; font-size: 11px; color: var(--text-dim); margin-top: 6px; position: relative; z-index: 1; }
+    .char-count { text-align: right; font-size: 11px; color: var(--text-dim); margin-top: 6px; }
 
-    /* ========== 提交按钮 ========== */
-    .submit-wrapper { display: flex; justify-content: center; width: 100%; margin-top: 10px; }
-    .submit-btn {
-        position: relative; width: 100%; height: 54px; border-radius: 27px; 
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.95));
-        backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.25);
-        box-shadow: 0 8px 24px var(--primary-glow), inset 0 2px 4px rgba(255, 255, 255, 0.6), inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-        color: #ffffff; font-size: 16px; font-weight: 700;
-        display: flex; justify-content: center; align-items: center; cursor: pointer; overflow: hidden;
-        transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-radius 0.4s;
-    }
+    /* 提交按钮 */
+    .submit-btn { position: relative; width: 100%; height: 54px; border-radius: 27px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; font-size: 16px; font-weight: 700; display: flex; justify-content: center; align-items: center; cursor: pointer; border: none; transition: width 0.4s, border-radius 0.4s; }
     .submit-btn:active { filter: brightness(0.9); }
-    .submit-btn.loading { width: 54px; border-radius: 50%; background: rgba(37, 99, 235, 0.9); pointer-events: none; }
-    .submit-btn.success { width: 54px; border-radius: 50%; background: rgba(16, 185, 129, 0.95); pointer-events: none; }
-    
-    .btn-text { opacity: 1; transition: opacity 0.2s; }
+    .submit-btn.loading { width: 54px; border-radius: 50%; pointer-events: none; }
+    .submit-btn.success { width: 54px; border-radius: 50%; background: #10b981; pointer-events: none; }
+    .btn-text { transition: opacity 0.2s; }
     .submit-btn.loading .btn-text, .submit-btn.success .btn-text { opacity: 0; }
-    .spinner { position: absolute; width: 24px; height: 24px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; opacity: 0; }
-    .submit-btn.loading .spinner { opacity: 1; animation: spin 0.8s linear infinite; }
-    .checkmark { position: absolute; width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; }
-    .submit-btn.success .checkmark { animation: drawCheck 0.4s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+    .spinner { position: absolute; width: 24px; height: 24px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; opacity: 0; animation: spin 0.8s linear infinite; }
+    .submit-btn.loading .spinner { opacity: 1; }
+    .checkmark { position: absolute; width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 3; stroke-dasharray: 24; stroke-dashoffset: 24; }
+    .submit-btn.success .checkmark { animation: drawCheck 0.4s forwards; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
     @keyframes drawCheck { 100% { stroke-dashoffset: 0; } }
 
-    /* ========== 液态玻璃导航 ========== */
+    /* ========== 底部导航 ========== */
     .nav-bar { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); left: 0; right: 0; display: flex; justify-content: center; z-index: 100; pointer-events: none; }
-    .nav-inner {
-        pointer-events: auto; position: relative; display: flex; width: 260px; height: 62px; padding: 5px; border-radius: 31px;
-        background: var(--nav-inner-bg); backdrop-filter: blur(24px) saturate(200%); -webkit-backdrop-filter: blur(24px) saturate(200%);
-        border: 1px solid var(--nav-border); box-shadow: var(--nav-shadow);
-    }
-    
-    .nav-pill {
-        position: absolute; top: 5px; left: 5px; width: calc(50% - 5px); height: calc(100% - 10px);
-        border-radius: 100px; z-index: 10; pointer-events: auto; 
-        background: rgba(150, 150, 150, 0.5);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.4), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
-        will-change: transform, background, box-shadow; transform-origin: center center;
-    }
-    /* 浅色模式下：半透明毛玻璃滑块 */
-    body.light-mode .nav-pill {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 1), inset 0 -1px 2px rgba(0, 0, 0, 0.05);
-    }
-    .nav-pill.is-grabbing {
-        background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px) saturate(200%); -webkit-backdrop-filter: blur(16px) saturate(200%);
-        border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 4px 10px rgba(255, 255, 255, 0.7), inset 0 -2px 6px rgba(0, 0, 0, 0.3);
-    }
-    body.light-mode .nav-pill.is-grabbing {
-        background: rgba(255, 255, 255, 0.8);
-    }
-
+    .nav-inner { pointer-events: auto; position: relative; display: flex; width: 260px; height: 62px; padding: 5px; border-radius: 31px; background: var(--nav-inner-bg); border: 1px solid var(--nav-border); box-shadow: var(--nav-shadow); backdrop-filter: blur(24px); }
+    .nav-pill { position: absolute; top: 5px; left: 5px; width: calc(50% - 5px); height: calc(100% - 10px); border-radius: 100px; z-index: 10; background: rgba(150, 150, 150, 0.5); box-shadow: 0 4px 12px rgba(0,0,0,0.3); will-change: transform; }
+    body.light-mode .nav-pill { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255,255,255,0.8); }
     .nav-item { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: none; background: none; color: var(--text-dim); font-size: 11px; font-weight: 700; cursor: pointer; }
-    .nav-item svg { width: 20px; height: 20px; fill: currentColor; transition: transform 0.3s, color 0.3s; }
-    .nav-item.active { color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-    body.light-mode .nav-item.active { color: #06120e; text-shadow: none; }
-    .nav-item.active svg { transform: scale(1.1); }
+    .nav-item svg { width: 20px; height: 20px; fill: currentColor; }
+    .nav-item.active { color: #ffffff; }
+    body.light-mode .nav-item.active { color: #06120e; }
 
-    /* ========== 页面滑出 ========== */
-    .settings-page {
-        position: absolute; inset: 0; 
-        background: transparent;
-        z-index: 800;
-        display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none;
-        padding: calc(24px + env(safe-area-inset-top)) var(--pad) 20px;
-        transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); visibility: hidden;
-    }
-    
-    .settings-page::-webkit-scrollbar { display: none; }
+    /* 其余弹窗/抽屉/设置页样式 */
+    .settings-page { position: absolute; inset: 0; background: transparent; z-index: 800; display: flex; flex-direction: column; overflow-y: auto; padding: calc(24px + env(safe-area-inset-top)) var(--pad) 20px; transform: translateY(100%); transition: transform 0.4s; visibility: hidden; }
     .settings-page.active { transform: translateY(0); visibility: visible; }
-    
-    .settings-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
-    .back-btn { background: none; border: none; color: var(--text); cursor: pointer; padding: 4px; margin-left: -4px; margin-top: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .settings-header .form-title { text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    
+    .settings-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+    .settings-header .form-title { margin: 0; }
     .settings-body { display: flex; flex-direction: column; gap: 12px; }
-    .settings-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-radius: 16px; font-size: 15px; font-weight: 700; }
-    .terms-btn { color: #3b82f6; text-decoration: underline; text-underline-offset: 4px; }
-    .terms-btn:active { opacity: 0.7; }
-
-    /* ========== 果冻开关 ========== */
+    .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-radius: 16px; font-weight: 700; }
+    .terms-btn { color: #3b82f6; text-decoration: underline; }
     .jelly-toggle { position: relative; width: 54px; height: 32px; background: var(--switch-bg); border-radius: 16px; cursor: pointer; }
-    .jelly-thumb {
-        position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; background: #ffffff; border-radius: 14px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.8);
-        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+    .jelly-thumb { position: absolute; top: 2px; left: 2px; width: 28px; height: 28px; background: #ffffff; border-radius: 14px; transition: transform 0.35s; }
     .jelly-toggle.active .jelly-thumb { transform: translateX(22px); }
-    .jelly-toggle.animating .jelly-thumb { width: 34px; }
-    .jelly-toggle.active.animating .jelly-thumb { transform: translateX(16px); }
-
-    /* ========== 提示与抽屉 ========== */
-    .toast { position: absolute; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); padding: 12px 20px; border-radius: 12px; font-size: 13px; transform: translate(-50%, 10px); opacity: 0; transition: 0.3s; pointer-events: none; z-index: 600; }
+    .toast { position: absolute; left: 50%; bottom: 120px; padding: 12px 20px; border-radius: 12px; background: rgba(18, 24, 30, 0.95); font-size: 13px; transform: translate(-50%, 10px); opacity: 0; transition: 0.3s; pointer-events: none; z-index: 600; border: 1px solid var(--glass-border); color: #fff;}
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
-    
-    .overlay { position: absolute; inset: 0; z-index: 900; display: none; align-items: flex-end; background: rgba(0, 0, 0, .3); backdrop-filter: blur(4px); }
-    .sheet { 
-        width: 100%; max-height: 80%; 
-        background: rgba(18, 24, 30, 0.85); 
-        backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
-        border-radius: 20px 20px 0 0; transform: translateY(100%); transition: transform 0.3s ease, background-color 0.4s;
-        display: flex; flex-direction: column; border-top: 1px solid var(--glass-border);
-    }
-    body.light-mode .sheet { background: rgba(250, 252, 255, 0.9); }
-    
+    .overlay { position: absolute; inset: 0; z-index: 900; display: none; align-items: flex-end; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+    .sheet { width: 100%; max-height: 80%; background: rgba(18, 24, 30, 0.95); border-radius: 20px 20px 0 0; transform: translateY(100%); transition: transform 0.3s; display: flex; flex-direction: column; }
     .sheet.active { transform: translateY(0); }
-    .sheet-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--glass-border); }
-    .sheet-head h3 { font-size: 16px; color: var(--text); font-weight: 700; }
-    .sheet-close { background: none; border: none; color: var(--text-dim); font-size: 24px; cursor: pointer; padding: 4px; }
-    .sheet-body { padding: 20px; overflow-y: auto; font-size: 14px; line-height: 1.8; white-space: pre-wrap; color: var(--text); }
+    .sheet-head { display: flex; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--glass-border); color: #fff;}
+    .sheet-close { background: none; border: none; color: #fff; font-size: 24px; }
+    .sheet-body { padding: 20px; overflow-y: auto; color: #fff; font-size: 14px; line-height: 1.8; white-space: pre-wrap;}
 
-    /* ========== 电脑端 (PC) 专属适配 ========== */
     @media (min-width: 768px) {
-        .app { max-width: 100%; }
-        
-        .page {
-            /* 在电脑上限制内容宽度并居中 */
-            padding-left: max(24px, calc(50vw - 400px));
-            padding-right: max(24px, calc(50vw - 400px));
-            padding-top: calc(40px + env(safe-area-inset-top));
-        }
-
-        /* 电脑端图片画廊变成三列等宽 Grid 布局 */
-        .gallery {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        /* 投稿箱表单居中限制宽度 */
-        .form-wrap { 
-            max-width: 600px; 
-            margin: 0 auto; 
-        }
-
-        /* 设置页面的内容居中 */
-        .settings-page {
-            padding-left: max(24px, calc(50vw - 300px));
-            padding-right: max(24px, calc(50vw - 300px));
-        }
-        
-        /* 导航栏稍微离底部远一点 */
+        .page { padding-left: max(24px, calc(50vw - 400px)); padding-right: max(24px, calc(50vw - 400px)); padding-top: 40px; }
+        .gallery { grid-template-columns: repeat(3, 1fr); }
+        .form-wrap { max-width: 600px; margin: 0 auto; }
         .nav-bar { bottom: 30px; }
     }
 </style>
 </head>
 <body class="light-mode">
 
-<!-- 背景层 -->
 <div class="bg-dark-layer" id="bg-dark-layer"></div>
 <div class="bg-light-layer" id="bg-light-layer"></div>
 
@@ -402,19 +221,14 @@
             <!-- 主页 -->
             <section class="page" id="page-home">
                 <img src="Chinasmp/1.jpg" alt="头像" class="avatar" onerror="this.style.display='none'">
-                
                 <div class="card glass intro">
                     <p>欢迎来到我们的 <b>我的世界</b> 服务器！</p>
                     <p>版本 <b>1.21.11</b> / Fabric 模组加载器</p>
-                    <p>欢迎加入一起冒险！</p>
-                    
-                    <!-- 服务器实时状态 -->
                     <div class="server-status">
                         <div class="status-dot" id="status-dot"></div>
                         <span id="status-text">获取状态中...</span>
                     </div>
                 </div>
-                
                 <div class="card glass">
                     <div class="card-head"><span>服务器文件</span><span class="path">Chinasmp/2.txt</span></div>
                     <div class="file-row">
@@ -451,29 +265,30 @@
             <!-- 投稿箱 -->
             <section class="page" id="page-submit">
                 <div class="form-wrap">
-                    <h2 class="form-title">投稿箱<small>建议 / 资源 / 反馈，都会送达服主</small></h2>
+                    <h2 class="form-title">投稿箱<small>点击提交将唤起您的邮件应用发送给服主</small></h2>
+                    
                     <div class="field glass" id="field-nick">
-                        <label>你的 QQ 群昵称 (仅字母、数字、下划线)</label>
+                        <label>你的 QQ 群昵称</label>
                         <input type="text" id="input-nick" placeholder="例: Steve" maxlength="32">
                         <div class="error-msg"></div>
                     </div>
+                    
                     <div class="field glass" id="field-content">
                         <label>投稿内容</label>
-                        <textarea id="input-content" rows="3" maxlength="300" placeholder="输入你想提交的建议..."></textarea>
+                        <textarea id="input-content" rows="4" maxlength="300" placeholder="输入你想提交的建议、资源或反馈..."></textarea>
                         <div class="char-count"><span id="char-now">0</span>/300</div>
                         <div class="error-msg"></div>
                     </div>
-                    <div class="field glass" id="field-contact">
-                        <label>QQ 邮箱</label>
-                        <input type="email" id="input-contact" placeholder="例: 123456@qq.com" inputmode="email">
-                        <div class="error-msg"></div>
-                    </div>
-                    <div class="submit-wrapper">
-                        <button class="submit-btn" id="btn-submit">
-                            <span class="btn-text">提交投稿</span>
-                            <span class="spinner"></span>
-                            <svg class="checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </button>
+                    
+                    <button class="submit-btn" id="btn-submit">
+                        <span class="btn-text">通过邮件发送</span>
+                        <span class="spinner"></span>
+                        <svg class="checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+
+                    <div style="font-size: 12px; color: var(--text-dim); text-align: center; margin-top: 16px; line-height: 1.6;">
+                        如果没有自动弹出邮箱软件，说明您的设备未配置邮箱。<br>
+                        <strong>不用担心</strong>，点击按钮后内容已自动复制，您可以直接打开 QQ 粘贴发送给群主。
                     </div>
                 </div>
             </section>
@@ -495,29 +310,23 @@
         </div>
     </nav>
 
-    <!-- 设置页面 -->
     <div class="settings-page" id="settings-page">
         <div class="settings-header">
-            <button class="back-btn" id="close-settings">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-            </button>
-            <h2 class="form-title" style="text-align: right; margin-bottom: 0;">设置</h2>
+            <button class="back-btn" id="close-settings" style="background:none;border:none;color:var(--text);font-size:24px;">&larr;</button>
+            <h2 class="form-title">设置</h2>
         </div>
         <div class="settings-body">
             <div class="settings-item glass">
                 <span>浅色模式</span>
-                <div class="jelly-toggle active" id="theme-toggle">
-                    <div class="jelly-thumb"></div>
-                </div>
+                <div class="jelly-toggle active" id="theme-toggle"><div class="jelly-thumb"></div></div>
             </div>
             <div class="settings-item glass" style="cursor: pointer;" data-path="/Chinasmp/a01.txt">
                 <span class="terms-btn">服务条款</span>
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="#3b82f6" style="opacity: 0.8;"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
             </div>
         </div>
     </div>
-
-    <div class="toast glass" id="toast"></div>
+    
+    <div class="toast" id="toast"></div>
     <div class="overlay" id="overlay">
         <div class="sheet" id="sheet">
             <div class="sheet-head"><h3 id="sheet-title">预览</h3><button class="sheet-close" id="sheet-close">&times;</button></div>
@@ -530,40 +339,102 @@
     const currentYear = new Date().getFullYear();
     document.getElementById('year').textContent = currentYear;
 
-    /* ================== 服务器状态获取逻辑 ================== */
-    // 👇👇👇 【请在这里修改为你的真实服务器 IP 或域名】 👇👇👇
-    // 如果有端口，格式为 "ip:端口"，例如 "mc.chinasmp.com:25565"
-    const SERVER_IP = "play.simpfun.cn:40494"; 
-    // 👆👆👆 ------------------------------------------ 👆👆👆
+    /* ================== 表单提交（唤起邮件）逻辑 ================== */
+    // 👇 请在这里修改为你想接收投稿的 QQ 邮箱
+    const TARGET_EMAIL = "1034137423@qq.com"; 
+    // 👆 ----------------------------------------
+
+    const nickInput = document.getElementById('input-nick');
+    const contentInput = document.getElementById('input-content');
+    const submitBtn = document.getElementById('btn-submit');
+    const charNow = document.getElementById('char-now');
+    const toast = document.getElementById('toast');
+
+    contentInput.addEventListener('input', () => { charNow.textContent = contentInput.value.length; });
+
+    function showError(inputId, msg) {
+        const field = document.getElementById(inputId).closest('.field');
+        field.classList.add('error');
+        const errMsg = field.querySelector('.error-msg');
+        errMsg.textContent = msg;
+        errMsg.classList.add('show');
+    }
+    function clearError(inputId) {
+        const field = document.getElementById(inputId).closest('.field');
+        field.classList.remove('error');
+        field.querySelector('.error-msg').classList.remove('show');
+    }
+    [nickInput, contentInput].forEach(el => el.addEventListener('input', () => clearError(el.id)));
+
+    submitBtn.addEventListener('click', () => {
+        let valid = true;
+        if (!nickInput.value.trim()) { showError('input-nick', '请填写昵称'); valid = false; }
+        if (!contentInput.value.trim()) { showError('input-content', '请填写内容'); valid = false; }
+        if (!valid) return;
+
+        // 拼接文本
+        const nick = nickInput.value.trim();
+        const content = contentInput.value.trim();
+        
+        const subject = `[ChinaSMP 投稿] 来自玩家 ${nick}`;
+        const body = `服主你好，这是来自网页的投稿：\n\n【昵称】\n${nick}\n\n【内容】\n${content}\n\n(此邮件由网页自动生成)`;
+
+        // 生成 mailto 链接
+        const mailtoLink = `mailto:${TARGET_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // UI 反馈
+        submitBtn.classList.add('loading');
+        submitBtn.querySelector('.btn-text').textContent = "正在唤醒邮件...";
+
+        // 1. 尝试复制内容到剪贴板（作为兜底）
+        const copyText = `收件人：${TARGET_EMAIL}\n主题：${subject}\n\n${body}`;
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(copyText).catch(() => {});
+        }
+
+        // 2. 触发跳转
+        setTimeout(() => {
+            window.location.href = mailtoLink;
+            
+            // 界面变绿打勾
+            submitBtn.classList.remove('loading');
+            submitBtn.classList.add('success');
+            toast.textContent = "已唤起邮件，若未弹出内容已复制！";
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                submitBtn.classList.remove('success');
+                submitBtn.querySelector('.btn-text').textContent = "通过邮件发送";
+                toast.classList.remove('show');
+            }, 3000);
+        }, 500);
+    });
+
+
+    /* ================== 服务器状态获取 ================== */
+    const SERVER_IP = "你的服务器IP或域名"; // 请务必修改
 
     async function fetchServerStatus() {
         const statusText = document.getElementById('status-text');
         const statusDot = document.getElementById('status-dot');
         
-        // 如果用户还没改 IP，显示提示
         if (SERVER_IP === "你的服务器IP或域名") {
             statusDot.className = 'status-dot offline';
             statusText.textContent = '请在代码中配置服务器IP';
             return;
         }
 
-        // 使用 AbortController 设置 5 秒超时，防止接口卡死导致无限加载
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
 
         try {
-            // 调用支持 CORS 的公共 Minecraft 状态 API
             const res = await fetch(`https://api.mcstatus.io/v2/status/java/${SERVER_IP}`, { signal: controller.signal });
             clearTimeout(timeoutId);
-            
-            if (!res.ok) throw new Error("API请求失败");
-            
+            if (!res.ok) throw new Error();
             const data = await res.json();
             
             if (data.online) {
                 statusDot.className = 'status-dot online';
-                
-                // 数据异常拦截：如果你的服只有40人，但接口返回几万，说明填错了IP
                 if (data.players.online > 10000 || data.players.max > 10000) {
                     statusText.textContent = 'IP异常或识别到大服';
                 } else {
@@ -576,24 +447,15 @@
         } catch (err) {
             clearTimeout(timeoutId);
             statusDot.className = 'status-dot offline';
-            // 区分是超时还是网络错误，绝对不抛出全局错误
-            if (err.name === 'AbortError') {
-                statusText.textContent = '获取状态超时';
-            } else {
-                statusText.textContent = '无法获取状态';
-            }
+            statusText.textContent = err.name === 'AbortError' ? '获取状态超时' : '无法获取状态';
         }
     }
-
-    // 页面加载后延迟 1 秒执行，不阻塞页面渲染
-    window.addEventListener('load', () => {
-        setTimeout(fetchServerStatus, 1000);
-    });
+    window.addEventListener('load', () => setTimeout(fetchServerStatus, 1000));
 
 
-    /* ================== 隐藏入口：连点3次进入设置 ================== */
-    let tapCount = 0;
-    let tapTimer = null;
+    /* ================== 页面交互基础逻辑 ================== */
+    // 隐藏设置入口
+    let tapCount = 0, tapTimer = null;
     const footer = document.getElementById('secret-footer');
     const settingsPage = document.getElementById('settings-page');
     const appElement = document.getElementById('app');
@@ -616,380 +478,112 @@
         appElement.classList.remove('settings-open'); 
     });
 
-    /* ================== 核心：圆形扩散动画 ================== */
+    // 主题切换
     const toggle = document.getElementById('theme-toggle');
     const bgLightLayer = document.getElementById('bg-light-layer');
     let isLightMode = true; 
     let animTimer = null;
-
     bgLightLayer.style.transition = 'clip-path 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
     bgLightLayer.style.clipPath = `circle(150% at 50% 50%)`;
 
     toggle.addEventListener('click', () => {
         isLightMode = !isLightMode;
-        
         toggle.classList.toggle('active', isLightMode);
-        toggle.classList.add('animating');
-        setTimeout(() => toggle.classList.remove('animating'), 350);
-        
-        if (isLightMode) {
-            document.body.classList.add('light-mode');
-        } else {
-            document.body.classList.remove('light-mode');
-        }
-
-        document.body.classList.add('theme-animating');
-        clearTimeout(animTimer);
-        animTimer = setTimeout(() => {
-            document.body.classList.remove('theme-animating');
-        }, 400);
+        document.body.classList.toggle('light-mode', isLightMode);
 
         const rect = toggle.getBoundingClientRect();
         const x = rect.left + rect.width / 2;
         const y = rect.top + rect.height / 2;
         const maxRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
 
-        if (isLightMode) {
-            bgLightLayer.style.clipPath = `circle(${maxRadius}px at ${x}px ${y}px)`;
-        } else {
-            bgLightLayer.style.clipPath = `circle(0px at ${x}px ${y}px)`;
-        }
+        bgLightLayer.style.clipPath = isLightMode ? `circle(${maxRadius}px at ${x}px ${y}px)` : `circle(0px at ${x}px ${y}px)`;
     });
 
-
-    /* ================== 完美兼容滚动的 3D 倾斜效果 ================== */
+    // 3D倾斜 (可以保留)
     const tiltElements = document.querySelectorAll('[data-tilt]');
-    
     tiltElements.forEach(el => {
-        let rect = null;
-        let startX = 0, startY = 0;
-        let isScrolling = false;
-        let isTilting = false;
-
-        const handleStart = (clientX, clientY) => {
-            rect = el.getBoundingClientRect();
-            startX = clientX;
-            startY = clientY;
-            isScrolling = false;
-            isTilting = false;
-            el.style.transition = 'transform 0.1s ease-out, box-shadow 0.4s ease';
-        };
-
-        const handleMove = (clientX, clientY, e) => {
+        let rect = null, startX = 0, startY = 0, isScrolling = false, isTilting = false;
+        const handleStart = (x, y) => { rect = el.getBoundingClientRect(); startX = x; startY = y; isScrolling = false; isTilting = false; el.style.transition = 'transform 0.1s ease-out'; };
+        const handleMove = (x, y, e) => {
             if (!rect) return;
-            
-            let deltaX = clientX - startX;
-            let deltaY = clientY - startY;
-
+            let dx = x - startX, dy = y - startY;
             if (!isScrolling && !isTilting) {
-                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 5) {
-                    isTilting = true; 
-                } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 5) {
-                    isScrolling = true; 
-                    el.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-                    el.style.transform = `rotateX(0deg) rotateY(0deg)`;
-                    el.style.boxShadow = 'var(--glass-highlight), var(--glass-shadow)';
-                    rect = null; 
-                    return;
-                }
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) isTilting = true; 
+                else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 5) { isScrolling = true; el.style.transform = `rotateX(0) rotateY(0)`; rect = null; return; }
             }
-
             if (isScrolling) return;
-
-            let x = clientX - rect.left;
-            let y = clientY - rect.top;
-            let xPercent = (x / rect.width) - 0.5;
-            let yPercent = (y / rect.height) - 0.5;
-            
-            let maxRotate = 15; 
-            let rotateX = -yPercent * maxRotate;
-            let rotateY = xPercent * maxRotate;
-            
-            el.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            el.style.boxShadow = `${-rotateY}px ${rotateX + 10}px 20px rgba(0, 0, 0, 0.2)`;
-            
-            if (isTilting && e.cancelable) {
-                e.preventDefault();
-            }
+            let px = (x - rect.left) / rect.width - 0.5, py = (y - rect.top) / rect.height - 0.5;
+            el.style.transform = `rotateX(${-py * 15}deg) rotateY(${px * 15}deg)`;
+            if (isTilting && e.cancelable) e.preventDefault();
         };
-
-        const handleEnd = () => {
-            if (!rect) return;
-            rect = null;
-            el.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease';
-            el.style.transform = `rotateX(0deg) rotateY(0deg)`;
-            el.style.boxShadow = 'var(--glass-highlight), var(--glass-shadow)';
-        };
-
-        el.addEventListener('pointerdown', (e) => {
-            if (e.pointerType === 'mouse') handleStart(e.clientX, e.clientY);
-        });
-        el.addEventListener('pointermove', (e) => {
-            if (e.pointerType === 'mouse' && e.buttons === 1) { 
-                handleMove(e.clientX, e.clientY, e);
-            } else if (e.pointerType === 'mouse') {
-                if (!rect) handleStart(e.clientX, e.clientY);
-                handleMove(e.clientX, e.clientY, e);
-            }
-        });
-        el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') handleEnd(); });
-        el.addEventListener('pointerup', (e) => { if (e.pointerType === 'mouse') handleEnd(); });
-
-        el.addEventListener('touchstart', (e) => {
-            handleStart(e.touches[0].clientX, e.touches[0].clientY);
-        }, { passive: true });
-
-        el.addEventListener('touchmove', (e) => {
-            handleMove(e.touches[0].clientX, e.touches[0].clientY, e);
-        }, { passive: false });
-
+        const handleEnd = () => { if (!rect) return; rect = null; el.style.transition = 'transform 0.4s'; el.style.transform = `rotateX(0) rotateY(0)`; };
+        el.addEventListener('touchstart', e => handleStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+        el.addEventListener('touchmove', e => handleMove(e.touches[0].clientX, e.touches[0].clientY, e), { passive: false });
         el.addEventListener('touchend', handleEnd);
-        el.addEventListener('touchcancel', handleEnd);
     });
 
-
-    /* ================== 核心滑动与拖拽逻辑 ================== */
+    // 左右滑动切页
     const pageWrap = document.getElementById('page-wrap');
     const pagesWrapper = document.getElementById('pages-wrapper');
     const pill = document.getElementById('pill');
     const navItems = document.querySelectorAll('.nav-item');
-    
-    let currentProgress = 0; 
-    let isPageDragging = false;
-    let isPillDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let startProgress = 0;
-    let isScrollingPage = false;
-    let isSwiping = false;
+    let currentProgress = 0, isSwiping = false, startX = 0, startY = 0, startProgress = 0, isScrollingPage = false;
 
-    function setProgress(progress, animate = true, isPillDrag = false) {
+    function setProgress(progress, animate = true) {
         progress = Math.max(0, Math.min(1, progress));
         currentProgress = progress;
-
-        const trans = animate ? 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
-        pagesWrapper.style.transition = trans;
-        
-        pill.style.transition = (animate && !isPillDrag) 
-            ? 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' 
-            : 'none';
-
-        const wrapWidth = pageWrap.offsetWidth;
-        pagesWrapper.style.transform = `translateX(${-progress * wrapWidth}px)`;
-        
-        const scale = isPillDrag ? 'scale(1.15) translateY(-2px)' : 'scale(1) translateY(0)';
-        pill.style.transform = `translateX(${progress * 100}%) ${scale}`;
-
-        navItems.forEach((item, idx) => {
-            item.classList.toggle('active', (progress > 0.5) ? (idx === 1) : (idx === 0));
-        });
+        pagesWrapper.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+        pill.style.transition = animate ? 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'none';
+        pagesWrapper.style.transform = `translateX(${-progress * pageWrap.offsetWidth}px)`;
+        pill.style.transform = `translateX(${progress * 100}%)`;
+        navItems.forEach((item, idx) => item.classList.toggle('active', (progress > 0.5) ? (idx === 1) : (idx === 0)));
     }
 
-    function handlePillStart(e) {
-        e.stopPropagation(); 
-        isPillDragging = true;
-        const touch = e.type.includes('touch') ? e.touches[0] : e;
-        startX = touch.clientX;
-        startProgress = currentProgress;
-        pill.classList.add('is-grabbing');
-        setProgress(currentProgress, false, true); 
-        if (e.cancelable) e.preventDefault();
-    }
+    pageWrap.addEventListener('touchstart', (e) => {
+        if (e.target.closest('input, textarea, .nav-inner, #secret-footer, [data-tilt], .settings-item, .submit-btn')) return; 
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY; startProgress = currentProgress; isScrollingPage = false; isSwiping = false;
+        pagesWrapper.style.transition = 'none'; pill.style.transition = 'none';
+    }, { passive: false });
 
-    function handlePillMove(e) {
-        if (!isPillDragging) return;
-        const touch = e.type.includes('touch') ? e.touches[0] : e;
-        const deltaX = touch.clientX - startX;
-        const pillWidth = pill.offsetWidth;
-        const dragProgress = deltaX / pillWidth;
-        let targetProgress = startProgress + dragProgress;
-        
-        if (targetProgress < 0) targetProgress = targetProgress * 0.4;
-        if (targetProgress > 1) targetProgress = 1 + (targetProgress - 1) * 0.4;
-
-        setProgress(targetProgress, false, true);
-        if (e.cancelable) e.preventDefault();
-    }
-
-    function handlePillEnd() {
-        if (!isPillDragging) return;
-        isPillDragging = false;
-        pill.classList.remove('is-grabbing');
-        let targetIndex = currentProgress > 0.5 ? 1 : 0;
-        setProgress(targetIndex, true, false);
-    }
-
-    function handlePageStart(e) {
-        if (e.target.closest('input, textarea, .nav-inner, #secret-footer, [data-tilt], .settings-item')) return; 
-        isPageDragging = true;
-        const touch = e.type.includes('touch') ? e.touches[0] : e;
-        startX = touch.clientX;
-        startY = touch.clientY;
-        startProgress = currentProgress;
-        isScrollingPage = false;
-        isSwiping = false;
-        pagesWrapper.style.transition = 'none';
-        pill.style.transition = 'none';
-    }
-
-    function handlePageMove(e) {
-        if (!isPageDragging) return;
-        const touch = e.type.includes('touch') ? e.touches[0] : e;
-        const deltaX = touch.clientX - startX;
-        const deltaY = touch.clientY - startY;
-
-        if (e.type.includes('touch') && !isSwiping && !isScrollingPage) {
-            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
-                isSwiping = true;
-                if (e.cancelable) e.preventDefault();
-            } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
-                isScrollingPage = true;
-                isPageDragging = false;
-                setProgress(currentProgress, true);
-                return;
-            }
+    pageWrap.addEventListener('touchmove', (e) => {
+        if (!startX) return;
+        let dx = e.touches[0].clientX - startX, dy = e.touches[0].clientY - startY;
+        if (!isSwiping && !isScrollingPage) {
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) { isSwiping = true; e.preventDefault(); }
+            else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) { isScrollingPage = true; setProgress(currentProgress, true); startX = 0; return; }
         }
-        if (!isSwiping && !e.type.includes('mouse')) return;
-
-        const wrapWidth = pageWrap.offsetWidth;
-        const dragProgress = deltaX / wrapWidth;
-        let targetProgress = startProgress - dragProgress;
-
-        if (targetProgress < 0) targetProgress = targetProgress * 0.3;
-        if (targetProgress > 1) targetProgress = 1 + (targetProgress - 1) * 0.3;
-
-        setProgress(targetProgress, false, false);
-        if (e.cancelable) e.preventDefault();
-    }
-
-    function handlePageEnd(e) {
-        if (!isPageDragging) return;
-        isPageDragging = false;
         if (!isSwiping) return;
-        
-        const touch = e.type.includes('touch') ? e.changedTouches[0] : e;
-        const deltaX = touch.clientX - startX;
-        const targetProgress = startProgress - (deltaX / pageWrap.offsetWidth);
+        setProgress(startProgress - (dx / pageWrap.offsetWidth), false);
+        e.preventDefault();
+    }, { passive: false });
 
-        let targetIndex = 0;
-        if (targetProgress > 0.5) targetIndex = 1;
-        if (deltaX < -50 && startProgress === 0) targetIndex = 1;
-        if (deltaX > 50 && startProgress === 1) targetIndex = 0;
-
-        setProgress(targetIndex, true, false);
-    }
-
-    pill.addEventListener('touchstart', handlePillStart, { passive: false });
-    pill.addEventListener('mousedown', handlePillStart);
-    window.addEventListener('touchmove', handlePillMove, { passive: false });
-    window.addEventListener('mousemove', handlePillMove);
-    window.addEventListener('touchend', handlePillEnd);
-    window.addEventListener('mouseup', handlePillEnd);
-
-    pageWrap.addEventListener('touchstart', handlePageStart, { passive: false });
-    pageWrap.addEventListener('touchmove', handlePageMove, { passive: false });
-    pageWrap.addEventListener('touchend', handlePageEnd);
-    pageWrap.addEventListener('mousedown', handlePageStart);
-
-    navItems.forEach((item, idx) => {
-        item.addEventListener('click', () => {
-            if (!isPillDragging) setProgress(idx, true, false);
-        });
+    pageWrap.addEventListener('touchend', (e) => {
+        if (!isSwiping) { startX = 0; return; }
+        let dx = e.changedTouches[0].clientX - startX;
+        let target = dx < -50 ? 1 : (dx > 50 ? 0 : (currentProgress > 0.5 ? 1 : 0));
+        setProgress(target, true);
+        startX = 0; isSwiping = false;
     });
 
-    window.addEventListener('resize', () => setProgress(currentProgress, false));
-    setProgress(0, false);
+    navItems.forEach(item => item.addEventListener('click', () => setProgress(parseInt(item.dataset.tab), true)));
 
-
-    /* ================== 表单逻辑 ================== */
-    const nickInput = document.getElementById('input-nick');
-    const contentInput = document.getElementById('input-content');
-    const contactInput = document.getElementById('input-contact');
-    const submitBtn = document.getElementById('btn-submit');
-    const charNow = document.getElementById('char-now');
-    const toast = document.getElementById('toast');
-
-    contentInput.addEventListener('input', () => { charNow.textContent = contentInput.value.length; });
-    nickInput.addEventListener('input', () => { nickInput.value = nickInput.value.replace(/[^a-zA-Z0-9_]/g, ''); });
-
-    function showError(inputId, msg) {
-        const field = document.getElementById(inputId).closest('.field');
-        field.classList.add('error');
-        const errMsg = field.querySelector('.error-msg');
-        errMsg.textContent = msg;
-        errMsg.classList.add('show');
-    }
-    function clearError(inputId) {
-        const field = document.getElementById(inputId).closest('.field');
-        field.classList.remove('error');
-        field.querySelector('.error-msg').classList.remove('show');
-    }
-    [nickInput, contentInput, contactInput].forEach(el => {
-        el.addEventListener('input', () => clearError(el.id));
-    });
-
-    submitBtn.addEventListener('click', () => {
-        let valid = true;
-        if (!nickInput.value.trim()) { showError('input-nick', '请填写昵称'); valid = false; }
-        else if (!/^[a-zA-Z0-9_]+$/.test(nickInput.value)) { showError('input-nick', '只能填写字母、数字和下划线'); valid = false; }
-        if (!contentInput.value.trim()) { showError('input-content', '请填写内容'); valid = false; }
-        if (!contactInput.value.trim()) { showError('input-contact', '请填写邮箱'); valid = false; }
-        else if (!/^\d+@qq\.com$/.test(contactInput.value.trim())) { showError('input-contact', '邮箱格式错误'); valid = false; }
-
-        if (!valid) return;
-
-        submitBtn.classList.add('loading');
-        setTimeout(() => {
-            submitBtn.classList.remove('loading');
-            submitBtn.classList.add('success');
-            toast.textContent = '投稿成功！';
-            toast.classList.add('show');
-            
-            nickInput.value = ''; contentInput.value = ''; contactInput.value = ''; charNow.textContent = '0';
-
-            setTimeout(() => {
-                submitBtn.classList.remove('success');
-                setTimeout(() => { toast.classList.remove('show'); }, 500);
-            }, 1500);
-        }, 1200);
-    });
-
-
-    /* ================== 抽屉与文件预览 ================== */
+    // 弹窗系统
     const overlay = document.getElementById('overlay');
     const sheet = document.getElementById('sheet');
-    const sheetBody = document.getElementById('sheet-body');
-    const sheetTitle = document.getElementById('sheet-title');
-
     document.querySelectorAll('[data-path]').forEach(btn => {
         btn.addEventListener('click', async () => {
-            const path = btn.dataset.path;
-            sheetTitle.textContent = '文件预览: ' + path;
-            sheetBody.textContent = '加载中...';
+            document.getElementById('sheet-title').textContent = '文件预览: ' + btn.dataset.path;
+            document.getElementById('sheet-body').textContent = '加载中...';
             overlay.style.display = 'flex';
             requestAnimationFrame(() => sheet.classList.add('active'));
-
             try {
-                const res = await fetch(path);
-                if (!res.ok) throw new Error();
-                const text = await res.text();
-                sheetBody.textContent = text || '(空文件)';
-            } catch (e) {
-                sheetBody.textContent = '文件不存在或无法读取。';
-            }
+                const res = await fetch(btn.dataset.path);
+                document.getElementById('sheet-body').textContent = res.ok ? (await res.text() || '(空文件)') : '文件不存在';
+            } catch { document.getElementById('sheet-body').textContent = '读取失败'; }
         });
     });
-
-    function closeSheet() {
-        sheet.classList.remove('active');
-        setTimeout(() => overlay.style.display = 'none', 300);
-    }
-    document.getElementById('sheet-close').addEventListener('click', closeSheet);
-    overlay.addEventListener('click', e => { if (e.target === overlay) closeSheet(); });
-
-    fetch('Chinasmp/4.txt').then(res => {
-        if (res.ok) document.getElementById('notice-card').hidden = false;
-    }).catch(() => {});
+    document.getElementById('sheet-close').addEventListener('click', () => { sheet.classList.remove('active'); setTimeout(() => overlay.style.display = 'none', 300); });
+    overlay.addEventListener('click', e => { if (e.target === overlay) { sheet.classList.remove('active'); setTimeout(() => overlay.style.display = 'none', 300); } });
 </script>
 </body>
 </html>
